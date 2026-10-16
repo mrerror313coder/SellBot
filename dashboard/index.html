@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SellBot Dashboard — Autonomous WhatsApp Sales Agent</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+          </svg>
+        </div>
+        <div class="brand-info">
+          <span class="brand-title">SellBot</span>
+          <span class="brand-badge">$0 Budget Edition</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-tab="overview" id="nav-overview">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          <span>Overview</span>
+        </button>
+        <button class="nav-item" data-tab="conversations" id="nav-conversations">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          <span>Conversations</span>
+          <span class="pill-badge" id="badge-conv-count">4</span>
+        </button>
+        <button class="nav-item" data-tab="catalog" id="nav-catalog">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+          <span>Catalog (50)</span>
+        </button>
+        <button class="nav-item" data-tab="simulator" id="nav-simulator">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10H12V2z"></path><path d="M12 2a10 10 0 0 1 10 10h-10V2z"></path></svg>
+          <span>WhatsApp Simulator</span>
+          <span class="live-pulse-dot"></span>
+        </button>
+        <button class="nav-item" data-tab="pairing" id="nav-pairing">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><path d="M8 8h8v8H8z"></path></svg>
+          <span>QR Pairing (Baileys)</span>
+        </button>
+        <button class="nav-item" data-tab="settings" id="nav-settings">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          <span>Settings</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="status-indicator">
+          <span class="status-dot online"></span>
+          <span class="status-text" id="backend-status">Agent Engine: Online</span>
+        </div>
+        <div class="store-badge-card">
+          <div class="store-avatar">🎂</div>
+          <div class="store-meta">
+            <span class="store-name" id="sidebar-store-name">Priya's Cakes</span>
+            <span class="store-plan">Free Tier • $0/mo</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Bar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <h1 class="page-title" id="page-title">Today's Overview</h1>
+          <span class="page-subtitle" id="page-subtitle">Autonomous sales agent performance & metrics</span>
+        </div>
+        <div class="topbar-right">
+          <div class="header-stat-pill">
+            <span class="pill-label">LLM Core:</span>
+            <span class="pill-value" id="top-llm-model">Gemma 2 9B (Groq)</span>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="btn-refresh" onclick="refreshCurrentTab()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"></path><path d="M1 20v-6h6"></path><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+            <span>Sync</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- TAB 1: OVERVIEW -->
+      <section class="tab-pane active" id="pane-overview">
+        <!-- 4 Stat Cards from PRD Section 14.2 -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-title">Chats Today</span>
+              <div class="stat-icon icon-blue">💬</div>
+            </div>
+            <div class="stat-value" id="stat-chats-today">28</div>
+            <div class="stat-trend positive">↑ 14% vs yesterday</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-title">Response Rate</span>
+              <div class="stat-icon icon-green">⚡</div>
+            </div>
+            <div class="stat-value" id="stat-response-rate">94%</div>
+            <div class="stat-subtext">Automated instant replies</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-title">Revenue Today</span>
+              <div class="stat-icon icon-gold">💰</div>
+            </div>
+            <div class="stat-value" id="stat-revenue-today">₹3,200</div>
+            <div class="stat-trend positive">UPI QR Instant Checkout</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-title">Avg Resp Time</span>
+              <div class="stat-icon icon-purple">⏱️</div>
+            </div>
+            <div class="stat-value" id="stat-avg-resp-time">3.1s</div>
+            <div class="stat-subtext">Groq Gemma 2 9B token inference</div>
+          </div>
+        </div>
+
+        <!-- Agent Metrics Banner (PRD Section 14.2) -->
+        <div class="agent-metrics-card">
+          <div class="card-header-row">
+            <div>
+              <h2 class="card-heading">Autonomous Agent Metrics</h2>
+              <p class="card-subheading">Live telemetry from Groq, Mastra Orchestration, and Sentry</p>
+            </div>
+            <span class="badge badge-success">Operational 100%</span>
+          </div>
+
+          <div class="metrics-row-grid">
+            <div class="metric-box">
+              <span class="box-label">Inference Model</span>
+              <span class="box-value" id="metric-model">Gemma 2 9B-IT</span>
+              <span class="box-sub">Via Groq Cloud (Free Tier)</span>
+            </div>
+            <div class="metric-box">
+              <span class="box-label">Average Latency</span>
+              <span class="box-value" id="metric-latency">3.1s</span>
+              <span class="box-sub">Fastest Free LLM Engine</span>
+            </div>
+            <div class="metric-box">
+              <span class="box-label">Tokens / Message</span>
+              <span class="box-value" id="metric-tokens">180</span>
+              <span class="box-sub">Optimized prompt compression</span>
+            </div>
+            <div class="metric-box">
+              <span class="box-label">Tool Calls Completed</span>
+              <span class="box-value" id="metric-tools">142</span>
+              <span class="box-sub">Vector, Stock, UPI QR, Math</span>
+            </div>
+            <div class="metric-box">
+              <span class="box-label">Daily API Usage</span>
+              <span class="box-value" id="metric-api-usage">142 / 14,400 (0.9%)</span>
+              <span class="box-sub">Plenty of free headroom</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Conversations (PRD Section 14.2) -->
+        <div class="table-card">
+          <div class="table-header-row">
+            <div>
+              <h2 class="card-heading">Recent Conversations</h2>
+              <p class="card-subheading">Customer interactions handled by SellBot</p>
+            </div>
+            <button class="btn btn-outline btn-sm" onclick="switchTab('conversations')">View All Chats →</button>
+          </div>
+
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Customer</th>
+                  <th>Last Inquiry</th>
+                  <th>Language</th>
+                  <th>Intent</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="recent-conversations-tbody">
+                <!-- Dynamically filled -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: CONVERSATIONS -->
+      <section class="tab-pane" id="pane-conversations">
+        <div class="conversations-layout">
+          <!-- Left List -->
+          <div class="chat-list-panel">
+            <div class="panel-search-bar">
+              <input type="text" id="conv-search-input" placeholder="Search conversations..." oninput="filterConversations()">
+            </div>
+            <div class="filter-chips">
+              <button class="chip active" onclick="setConvFilter('all', this)">All</button>
+              <button class="chip" onclick="setConvFilter('active', this)">Active</button>
+              <button class="chip" onclick="setConvFilter('sold', this)">Sold</button>
+              <button class="chip" onclick="setConvFilter('escalated', this)">Escalated</button>
+            </div>
+            <div class="chat-items-list" id="conversations-list">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Right Detail View -->
+          <div class="chat-detail-panel" id="chat-detail-empty">
+            <div class="empty-state">
+              <div class="empty-icon">💬</div>
+              <h3>Select a Conversation</h3>
+              <p>Click on any customer conversation to view full multi-turn messages, tools executed, and agent reasoning traces.</p>
+            </div>
+          </div>
+
+          <div class="chat-detail-panel" id="chat-detail-content" style="display: none;">
+            <div class="detail-header">
+              <div class="detail-user-info">
+                <h3 id="detail-customer-name">Rahul Sharma</h3>
+                <span id="detail-customer-phone" class="text-muted">whatsapp:919876543210</span>
+              </div>
+              <div class="detail-actions">
+                <span class="badge" id="detail-status-badge">Sold</span>
+                <select id="detail-status-select" onchange="updateConversationStatus(this.value)">
+                  <option value="active">Active</option>
+                  <option value="sold">Sold</option>
+                  <option value="escalated">Escalated (Human Handoff)</option>
+                  <option value="closed">Closed</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Messages Transcript -->
+            <div class="detail-messages-body" id="detail-messages-container">
+              <!-- Dynamically rendered -->
+            </div>
+
+            <!-- Agent Reasoning Inspector Drawer -->
+            <div class="reasoning-inspector" id="detail-reasoning-inspector">
+              <div class="inspector-header">
+                <span>🤖 Mastra Agent Decision Trace</span>
+                <span class="badge badge-info" id="inspector-tools-count">3 Tools</span>
+              </div>
+              <div class="inspector-body" id="inspector-reasoning-text">
+                Detected gift intent for girlfriend, budget 500 INR. Recommended Cupcake Box (₹450).
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: CATALOG -->
+      <section class="tab-pane" id="pane-catalog">
+        <div class="catalog-header-bar">
+          <div class="search-and-filters">
+            <input type="text" id="catalog-search-input" placeholder="Search catalog by name, flavor, or SKU..." oninput="filterCatalog()">
+            <select id="catalog-category-select" onchange="filterCatalog()">
+              <option value="">All Categories</option>
+              <option value="cakes">Cakes</option>
+              <option value="cupcakes">Cupcakes</option>
+              <option value="brownies">Brownies</option>
+              <option value="cookies">Cookies</option>
+              <option value="macarons">Macarons</option>
+              <option value="accessories">Accessories</option>
+              <option value="hampers">Gift Hampers</option>
+            </select>
+          </div>
+          <div class="catalog-actions">
+            <input type="file" id="csv-file-input" accept=".csv" style="display: none;" onchange="handleCsvUpload(event)">
+            <button class="btn btn-secondary" onclick="document.getElementById('csv-file-input').click()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+              <span>Upload CSV (Appendix C)</span>
+            </button>
+            <button class="btn btn-primary" onclick="showAddProductModal()">
+              <span>+ Add Product</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="catalog-grid" id="catalog-cards-grid">
+          <!-- Dynamically populated -->
+        </div>
+      </section>
+
+      <!-- TAB 4: WHATSAPP WEB SIMULATOR (PRD Section 14.1) -->
+      <section class="tab-pane" id="pane-simulator">
+        <div class="simulator-wrapper">
+          <div class="phone-frame">
+            <div class="wa-header">
+              <div class="wa-avatar">🎂</div>
+              <div class="wa-store-info">
+                <span class="wa-store-title" id="sim-store-title">Priya's Cakes</span>
+                <span class="wa-online-status">Online • 24/7 AI Sales Agent</span>
+              </div>
+              <div class="wa-header-actions">
+                <button class="sim-btn-clear" onclick="clearSimulator()" title="Reset Chat">🔄</button>
+              </div>
+            </div>
+
+            <div class="wa-chat-body" id="sim-chat-body">
+              <!-- Initial Welcome message matching Section 14.1 -->
+              <div class="wa-msg-row agent">
+                <div class="wa-msg-bubble agent">
+                  <div class="wa-msg-text">
+                    Namaste! 🎂<br>
+                    Welcome to Priya's Cakes! Main aapki kya madad kar sakta hoon?<br><br>
+                    Aap mujhse pooch sakte hain:<br>
+                    • <i>"Birthday cake dikhao"</i><br>
+                    • <i>"Eggless options?"</i><br>
+                    • <i>"Gift for mom under 500"</i>
+                  </div>
+                  <div class="wa-msg-time">10:00 AM</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Typing indicator -->
+            <div class="wa-typing-bar" id="sim-typing-bar" style="display: none;">
+              <span>SellBot is typing</span>
+              <span class="dot-flashing"></span>
+            </div>
+
+            <!-- Input Bar -->
+            <div class="wa-input-bar">
+              <button class="sim-quick-btn" onclick="sendQuickPrompt('Mujhe kal ke liye 2kg chocolate cake chahiye, budget 800 hai')">💡 Kal cake (₹800)</button>
+              <button class="sim-quick-btn" onclick="sendQuickPrompt('I need a gift for my mom, budget 500')">🎁 Gift Mom</button>
+              <button class="sim-quick-btn" onclick="sendQuickPrompt('Eggless options?')">🌱 Eggless</button>
+              <button class="sim-quick-btn" onclick="sendQuickPrompt('Yes, add candles and confirm order')">🛒 Buy & Pay</button>
+            </div>
+            <form class="wa-input-form" onsubmit="handleSimulatorSubmit(event)">
+              <input type="text" id="sim-input" placeholder="Type a message (English, Hindi, Spanish, Arabic, Portuguese)..." autocomplete="off">
+              <button type="submit" class="wa-send-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+              </button>
+            </form>
+          </div>
+
+          <!-- Simulator Telemetry Sidebar -->
+          <div class="sim-telemetry-sidebar">
+            <h3 class="panel-heading">⚡ Agent Live Inference Engine</h3>
+            <p class="panel-desc">Real-time perception, tool dispatch, and reasoning metrics</p>
+
+            <div class="telemetry-stat-card">
+              <span class="label">Detected Language</span>
+              <span class="value highlight" id="sim-telemetry-lang">Hinglish (hi-en)</span>
+            </div>
+
+            <div class="telemetry-stat-card">
+              <span class="label">Classified Intent</span>
+              <span class="value" id="sim-telemetry-intent">browse</span>
+            </div>
+
+            <div class="telemetry-stat-card">
+              <span class="label">Tools Executed</span>
+              <div class="chips-list" id="sim-telemetry-tools">
+                <span class="badge badge-info">language_detector</span>
+                <span class="badge badge-info">intent_classifier</span>
+                <span class="badge badge-info">catalog_search</span>
+              </div>
+            </div>
+
+            <div class="telemetry-stat-card">
+              <span class="label">Response Latency</span>
+              <span class="value" id="sim-telemetry-latency">2,140 ms</span>
+            </div>
+
+            <div class="telemetry-stat-card">
+              <span class="label">Tokens Consumed</span>
+              <span class="value" id="sim-telemetry-tokens">180</span>
+            </div>
+
+            <!-- Payment QR Card if generated -->
+            <div class="telemetry-payment-preview" id="sim-payment-preview" style="display: none;">
+              <h4>📲 Generated UPI Payment QR</h4>
+              <img id="sim-payment-qr-img" src="" alt="Payment QR">
+              <a id="sim-payment-upi-link" href="#" target="_blank" class="upi-link-btn">Pay via UPI Direct</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: QR PAIRING (BAILEYS) -->
+      <section class="tab-pane" id="pane-pairing">
+        <div class="pairing-card">
+          <div class="pairing-header">
+            <h2>WhatsApp Web QR Code Pairing</h2>
+            <p>Connect your phone with SellBot using Baileys without any Twilio or Meta API fees ($0 Cost)</p>
+          </div>
+
+          <div class="pairing-body">
+            <div class="qr-display-box" id="baileys-qr-box">
+              <div class="qr-loading-spinner" id="qr-spinner">
+                <div class="spinner"></div>
+                <p>Generating Baileys authentication session...</p>
+              </div>
+              <img id="baileys-qr-image" src="" alt="Scan WhatsApp QR" style="display: none;">
+            </div>
+
+            <div class="pairing-instructions">
+              <h3>How to Connect:</h3>
+              <ol>
+                <li>Open <b>WhatsApp</b> on your mobile phone.</li>
+                <li>Tap <b>Menu (⋮)</b> or <b>Settings</b> and select <b>Linked Devices</b>.</li>
+                <li>Tap <b>Link a Device</b>.</li>
+                <li>Point your camera at this QR code to scan.</li>
+                <li>Once scanned, the session is saved to <code>./auth/baileys-session</code> and auto-reconnects!</li>
+              </ol>
+              <div class="pairing-btn-row">
+                <button class="btn btn-primary" onclick="initiateBaileysConnect()">Generate / Refresh QR Code</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 6: SETTINGS -->
+      <section class="tab-pane" id="pane-settings">
+        <div class="settings-card">
+          <h2 class="card-heading">Store & Agent Settings</h2>
+          <p class="card-subheading">Configure agent personality, voice, UPI ID, and currency (PRD Section 14.2 Page 4)</p>
+
+          <form id="settings-form" onsubmit="saveSettings(event)">
+            <div class="form-group">
+              <label for="set-store-name">Store Name</label>
+              <input type="text" id="set-store-name" value="Priya's Cakes" required>
+            </div>
+
+            <div class="form-group">
+              <label for="set-personality">Agent Personality & Brand Voice</label>
+              <textarea id="set-personality" rows="3">warm, friendly, uses emojis, helpful pastry and gift consultant</textarea>
+              <small class="text-muted">Injected into Gemma 2 9B prompt rules</small>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col">
+                <label for="set-upi-id">UPI ID for Instant QR Payments</label>
+                <input type="text" id="set-upi-id" value="priya@paytm" required>
+              </div>
+              <div class="form-group col">
+                <label for="set-currency">Store Currency</label>
+                <input type="text" id="set-currency" value="INR" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col">
+                <label for="set-free-shipping">Free Shipping Threshold</label>
+                <input type="number" id="set-free-shipping" value="1000">
+              </div>
+              <div class="form-group col">
+                <label for="set-upsell">Upsell Aggressiveness (0.1 - 1.0)</label>
+                <input type="range" id="set-upsell" min="0.1" max="1.0" step="0.1" value="0.5" oninput="document.getElementById('upsell-val').innerText = this.value">
+                <span id="upsell-val" style="font-weight: 700; color: #10b981;">0.5</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Supported Multilingual Channels (Gemma 2 Native)</label>
+              <div class="checkbox-group">
+                <label><input type="checkbox" checked disabled> English (en)</label>
+                <label><input type="checkbox" checked disabled> Hindi & Hinglish (hi, hi-en)</label>
+                <label><input type="checkbox" checked disabled> Spanish (es)</label>
+                <label><input type="checkbox" checked disabled> Arabic (ar)</label>
+                <label><input type="checkbox" checked disabled> Portuguese (pt)</label>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Save Settings to MongoDB</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Add Product Modal -->
+  <div class="modal-overlay" id="product-modal" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Add New Product to Catalog</h3>
+        <button class="modal-close" onclick="closeAddProductModal()">✕</button>
+      </div>
+      <form onsubmit="submitNewProduct(event)">
+        <div class="form-group">
+          <label>Product Name</label>
+          <input type="text" id="new-prod-name" required placeholder="e.g. Pistachio Raspberry Tart">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="new-prod-desc" required placeholder="Detailed description for vector semantic search..."></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group col">
+            <label>Price (₹)</label>
+            <input type="number" id="new-prod-price" required value="450">
+          </div>
+          <div class="form-group col">
+            <label>SKU</label>
+            <input type="text" id="new-prod-sku" required placeholder="TAR-PIS-001">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col">
+            <label>Category</label>
+            <input type="text" id="new-prod-category" placeholder="pastries, gift">
+          </div>
+          <div class="form-group col">
+            <label>Quantity in Stock</label>
+            <input type="number" id="new-prod-qty" value="20">
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeAddProductModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save & Generate 768-dim Vector</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
