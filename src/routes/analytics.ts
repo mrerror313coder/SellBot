@@ -64,7 +64,7 @@ analyticsRouter.get('/', async (req: Request, res: Response) => {
         escalatedChats,
       },
       agentMetrics: {
-        model: `${sentryStats.model} (Groq Free Tier)`,
+        model: sentryStats.model || 'gemma2-9b-it',
         avgLatency: `${sentryStats.avgLatencySec}s`,
         avgTokensPerMsg: sentryStats.avgTokensPerMsg,
         totalToolCalls: sentryStats.totalToolCalls,

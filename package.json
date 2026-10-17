@@ -1,7 +1,7 @@
 {
   "name": "sellbot",
   "version": "1.0.0",
-  "description": "Autonomous AI WhatsApp Sales Agent for small businesses ($0 Budget Student Edition)",
+  "description": "Autonomous AI WhatsApp Sales Agent for e-commerce stores",
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",

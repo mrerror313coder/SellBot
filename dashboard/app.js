@@ -58,7 +58,7 @@ function switchTab(tabId) {
     conversations: 'Multi-turn chats, intent tracking, and human escalation',
     catalog: '50 SKUs loaded with 768-dim semantic search vectors',
     simulator: 'Test multilingual queries, speech, and UPI checkout in real-time',
-    pairing: 'Scan with your phone WhatsApp to go live via Baileys ($0 API)',
+    pairing: 'Scan with your WhatsApp to connect live messaging',
     settings: 'Customize brand voice, languages, and payment credentials',
   };
 

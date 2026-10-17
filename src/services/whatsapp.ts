@@ -110,7 +110,7 @@ export class WhatsAppService {
           if (!msg.message || msg.key.fromMe) continue;
 
           const from = msg.key.remoteJid;
-          if (!from || from.includes('@g.us')) continue; // Ignore groups for MVP 1-on-1 sales
+          if (!from || from.includes('@g.us') || from.includes('@newsletter') || from.includes('@broadcast')) continue; // Ignore groups & newsletters
 
           const text =
             msg.message.conversation ||
