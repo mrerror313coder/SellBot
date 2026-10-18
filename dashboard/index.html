@@ -336,13 +336,14 @@
 
             <!-- Input Bar -->
             <div class="wa-input-bar">
-              <button class="sim-quick-btn" onclick="sendQuickPrompt('Mujhe kal ke liye 2kg chocolate cake chahiye, budget 800 hai')">💡 Kal cake (₹800)</button>
+              <button class="sim-quick-btn" onclick="sendQuickPrompt('Kasy hain aap?')">🇵🇰 Kasy hain?</button>
+              <button class="sim-quick-btn" onclick="sendQuickPrompt('AoA, kal k lye chocolate cake chahye, budget 800')">🇵🇰 Kal cake (Rs. 800)</button>
+              <button class="sim-quick-btn" onclick="sendQuickPrompt('EasyPaisa ya Cash on Delivery available hai?')">🇵🇰 EasyPaisa / COD</button>
+              <button class="sim-quick-btn" onclick="sendQuickPrompt('Mujhy bike leni hai')">🏍️ Bike inquiry</button>
               <button class="sim-quick-btn" onclick="sendQuickPrompt('I need a gift for my mom, budget 500')">🎁 Gift Mom</button>
-              <button class="sim-quick-btn" onclick="sendQuickPrompt('Eggless options?')">🌱 Eggless</button>
-              <button class="sim-quick-btn" onclick="sendQuickPrompt('Yes, add candles and confirm order')">🛒 Buy & Pay</button>
             </div>
             <form class="wa-input-form" onsubmit="handleSimulatorSubmit(event)">
-              <input type="text" id="sim-input" placeholder="Type a message (English, Hindi, Spanish, Arabic, Portuguese)..." autocomplete="off">
+              <input type="text" id="sim-input" placeholder="Type a message (Urdu/Roman Urdu, English, Hindi, Arabic, Spanish)..." autocomplete="off">
               <button type="submit" class="wa-send-btn">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
               </button>

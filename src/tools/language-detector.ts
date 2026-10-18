@@ -1,5 +1,7 @@
+export type SupportedLanguage = 'en' | 'ur' | 'hi' | 'hi-en' | 'es' | 'ar' | 'pt';
+
 export interface LanguageDetectionResult {
-  language: 'en' | 'hi' | 'hi-en' | 'es' | 'ar' | 'pt';
+  language: SupportedLanguage;
   displayName: string;
   confidence: number;
 }
@@ -7,32 +9,54 @@ export interface LanguageDetectionResult {
 export class LanguageDetectorTool {
   public static detect(text: string): LanguageDetectionResult {
     const trimmed = text.trim();
+    const lower = trimmed.toLowerCase();
 
-    // Arabic Unicode block
+    // 1. Urdu / Arabic script detection
+    // Specific Urdu characters: ٹ (U+0679), ڈ (U+0688), ڑ (U+0691), ں (U+06BA), ے (U+06D2)
+    if (/[\u0679\u0688\u0691\u06BA\u06D2]/.test(trimmed)) {
+      return { language: 'ur', displayName: 'Urdu (اردو)', confidence: 0.99 };
+    }
+
+    // General Arabic block
     if (/[\u0600-\u06FF]/.test(trimmed)) {
-      return { language: 'ar', displayName: 'Arabic', confidence: 0.98 };
+      return { language: 'ar', displayName: 'Arabic (العربية)', confidence: 0.98 };
     }
 
-    // Devanagari script for pure Hindi
+    // 2. Devanagari script for pure Hindi
     if (/[\u0900-\u097F]/.test(trimmed)) {
-      return { language: 'hi', displayName: 'Hindi (Devanagari)', confidence: 0.99 };
+      return { language: 'hi', displayName: 'Hindi (हिंदी)', confidence: 0.99 };
     }
 
-    // Hinglish (Romanized Hindi) vocabulary detection
-    const hinglishKeywords = [
-      'kya', 'hai', 'hain', 'chahiye', 'mujhe', 'kitne', 'ka', 'ki', 'ke', 'bhejo', 'dikhao',
-      'kal', 'dost', 'bhai', 'shukriya', 'daam', 'dena', 'acha', 'sahi', 'naam', 'namaste',
-      'kar', 'raha', 'rahi', 'hoga', 'hogi', 'paise', 'batao', 'bataiye', 'kaise', 'bachega',
-      'kaun', 'se', 'aap', 'aapka', 'aapki', 'yeh', 'woh', 'sabse', 'kripya', 'dijiye',
+    // 3. Pakistani Roman Urdu detection
+    const pakistaniUrduKeywords = [
+      'salam', 'assalam', 'alaikum', 'walaikum', 'aoa', 'kasy', 'kesy', 'kese', 'kaise',
+      'mujhy', 'mujhe', 'chahye', 'chahiye', 'kitny', 'kitnay', 'kitne', 'kia', 'kya',
+      'btao', 'batao', 'bataiye', 'sunao', 'theek', 'alhamdulillah', 'shukriya', 'bhai',
+      'janab', 'ap', 'aap', 'pesy', 'paise', 'bhejo', 'mangwana', 'mil', 'miley', 'ga', 'gi',
+      'karachi', 'lahore', 'islamabad', 'rawalpindi', 'peshawar', 'multan', 'faisalabad',
+      'easypaisa', 'jazzcash', 'raast', 'cod', 'cash on delivery', 'hain', 'hai', 'hoga', 'hogi',
+      'leni', 'lena', 'kaun', 'konsa', 'konsi', 'achha', 'acha', 'zabardast', 'shukria',
     ];
-    const tokens = trimmed.toLowerCase().split(/\s+/);
-    const hinglishMatchCount = tokens.filter((t) => hinglishKeywords.includes(t)).length;
 
-    if (hinglishMatchCount >= 2 || (tokens.length <= 4 && hinglishMatchCount >= 1)) {
-      return { language: 'hi-en', displayName: 'Hinglish (Hindi in English)', confidence: 0.92 };
+    const tokens = lower.split(/[\s,?.!]+/).filter(Boolean);
+    const urduMatchCount = tokens.filter((t) => pakistaniUrduKeywords.includes(t)).length;
+
+    // Explicit Pakistani Islamic greetings or Roman Urdu markers
+    if (
+      /\b(aoa|salam|assalam|walaikum|alhamdulillah|kasy|kesy|mujhy|chahye|kitny|easypaisa|jazzcash|raast)\b/i.test(lower)
+    ) {
+      return { language: 'ur', displayName: 'Pakistani Urdu (Roman Urdu)', confidence: 0.96 };
     }
 
-    // Spanish keywords
+    if (urduMatchCount >= 2 || (tokens.length <= 4 && urduMatchCount >= 1)) {
+      // Check if Indian Hindi markers exist (namaste, pranam, swagat)
+      if (/\b(namaste|pranam|swagat|shikayat|daam|kripya)\b/i.test(lower)) {
+        return { language: 'hi-en', displayName: 'Hinglish (Hindi in English)', confidence: 0.92 };
+      }
+      return { language: 'ur', displayName: 'Pakistani Urdu (Roman Urdu)', confidence: 0.94 };
+    }
+
+    // 4. Spanish keywords
     const spanishKeywords = [
       'hola', 'necesito', 'quiero', 'cuanto', 'cuesta', 'pastel', 'torta', 'gracias',
       'por', 'favor', 'cumpleanos', 'cumpleaños', 'para', 'mama', 'mamá', 'amigo',
@@ -41,7 +65,7 @@ export class LanguageDetectorTool {
       return { language: 'es', displayName: 'Spanish', confidence: 0.95 };
     }
 
-    // Portuguese keywords
+    // 5. Portuguese keywords
     const portugueseKeywords = [
       'ola', 'olá', 'preciso', 'quero', 'quanto', 'custa', 'bolo', 'obrigado',
       'obrigada', 'para', 'mae', 'mãe', 'entrega', 'tamanho', 'voce', 'você',

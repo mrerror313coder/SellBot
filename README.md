@@ -1,27 +1,28 @@
 # 🧁 SellBot — Autonomous WhatsApp Sales Agent
 
-> **Student Edition — $0 Budget | Hacktoberfest 2026: Agentic Commerce**  
-> Built with **Gemma 2 9B**, **Mastra**, **Baileys (WhatsApp Web API)**, **MongoDB Atlas**, **Edge TTS**, and **Sentry**.
+> **Production-Grade Agentic Commerce Platform**  
+> Built with **Gemma 2 9B**, **Mastra Architecture**, **Baileys (WhatsApp Web API Socket)**, **MongoDB Atlas Vector Search**, **Edge TTS**, and **Sentry Telemetry**.
 
-[![Tests](https://img.shields.io/badge/tests-38%20passed-10b981.svg)]()
-[![Cost](https://img.shields.io/badge/monthly%20cost-%240.00-10b981.svg)]()
+[![Tests](https://img.shields.io/badge/tests-49%20passed-10b981.svg)]()
 [![Model](https://img.shields.io/badge/AI%20Model-Gemma%202%209B-purple.svg)]()
-[![Stack](https://img.shields.io/badge/whatsapp-Baileys%20(No%20Twilio)-00a884.svg)]()
+[![Stack](https://img.shields.io/badge/whatsapp-Baileys%20Socket-00a884.svg)]()
+[![Payments](https://img.shields.io/badge/payments-EasyPaisa%20%7C%20JazzCash%20%7C%20UPI-blue.svg)]()
 
 ---
 
 ## 🌟 Executive Summary
 
-Small e-commerce businesses conduct **60–80% of sales through WhatsApp**, yet lose over 67% of after-hours leads because human teams cannot reply 24/7. Commercial AI solutions (OpenAI wrappers, Zendesk, Salesforce) cost **$50–$2,000/month** and transmit sensitive customer PII to closed clouds.
+Small to medium e-commerce businesses conduct **60–80% of sales through WhatsApp**, yet lose over 67% of after-hours leads because human teams cannot reply 24/7. Legacy commercial AI solutions rely on rigid decision trees, require expensive monthly overhead, and transmit sensitive customer PII to closed clouds.
 
-**SellBot** is an autonomous, multilingual AI sales agent that lives directly inside WhatsApp. Built on a strict **$0 budget**, it:
-1. **Auto-detects languages** across 5+ languages (English, Hinglish/Hindi, Spanish, Arabic, Portuguese).
-2. **Understands vague customer inquiries** (e.g. *"Mujhe gift chahiye mom ke liye, budget 500"*).
-3. **Searches catalogs semantically** using 768-dimensional vector embeddings with MongoDB Atlas Vector Search.
-4. **Performs live stock checks & price math** with intelligent upsells (complementary candles, gift wraps).
-5. **Generates instant UPI QR codes & payment links** for frictionless 1-tap checkout.
-6. **Autonomously schedules post-purchase follow-ups** (T+1d, T+7d, T+30d) via background `node-cron`.
-7. **Includes an Admin Dashboard** and **WhatsApp Web Simulator** for testing in real-time.
+**SellBot** is an autonomous, multilingual AI sales agent that lives directly inside WhatsApp. It:
+1. **Auto-detects languages** across 6+ languages (Pakistani Roman Urdu, English, Hinglish/Hindi, Spanish, Arabic, Portuguese).
+2. **Understands nuanced, localized customer inquiries** (e.g. *"AoA, kal k lye chocolate cake chahye, budget 800"* or *"Kasy hain aap"*).
+3. **Gracefully filters out-of-scope inquiries** (e.g. politely clarifying store focus when asked for bikes, electronics, or unrelated items).
+4. **Searches catalogs semantically** using 768-dimensional vector embeddings with MongoDB Atlas Vector Search.
+5. **Performs live stock checks & price math** with intelligent upsells (complementary candles, gift wraps).
+6. **Generates instant localized payment QR codes & instructions** (EasyPaisa, JazzCash, Raast, Cash on Delivery, and UPI) for frictionless checkout.
+7. **Autonomously schedules post-purchase follow-ups** (T+1d, T+7d, T+30d) via background `node-cron`.
+8. **Includes an Admin Dashboard** and **Interactive WhatsApp Web Simulator** for testing in real-time.
 
 ---
 
@@ -32,56 +33,55 @@ Small e-commerce businesses conduct **60–80% of sales through WhatsApp**, yet 
 │                       CUSTOMER DEVICES                      │
 │            WhatsApp Mobile  •  WhatsApp Desktop             │
 └──────────────────────────────┬──────────────────────────────┘
-                               │ (QR Scan / WebSockets)
-                               ▼
+                                │ (QR Scan / WebSockets)
+                                ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                   WHATSAPP LAYER (FREE)                     │
-│         Baileys (Open-Source WhatsApp Web API Socket)       │
-│      • No Twilio • No Meta fees • Typing delays & anti-ban  │
+│                    WHATSAPP SOCKET LAYER                    │
+│         Baileys (Direct WhatsApp Web API Socket)            │
+│      • Direct socket connection • Typing delays & anti-ban  │
 └──────────────────────────────┬──────────────────────────────┘
-                               │
-                               ▼
+                                │
+                                ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                    EXPRESS & MASTRA AGENT                   │
 │  ┌────────────────────────────────────────────────────────┐ │
 │  │ Orchestrator Agent                                     │ │
-│  │ ├─ Language Detector (en, hi-en, hi, es, ar, pt)      │ │
-│  │ ├─ Intent Classifier (browse, compare, buy, complain)  │ │
+│  │ ├─ Language Detector (ur, en, hi-en, hi, es, ar, pt)   │ │
+│  │ ├─ Intent Classifier (browse, compare, buy, complain,  │ │
+│  │ │                     out_of_scope, greeting)          │ │
 │  │ ├─ Catalog Search (Atlas 768-dim Vector Search)        │ │
 │  │ ├─ Inventory Check (Real-time stock verification)      │ │
 │  │ ├─ Price Calculator (Cart math, discounts, shipping)   │ │
-│  │ ├─ Payment QR Tool (NPCI UPI standard + PayPal)        │ │
+│  │ ├─ Payment QR Tool (EasyPaisa, JazzCash, Raast, UPI)   │ │
 │  │ ├─ Order Creator & Follow-Up Scheduler (node-cron)     │ │
 │  │ └─ Voice TTS (Edge TTS Neural Voices)                  │ │
 │  └────────────────────────────────────────────────────────┘ │
 └──────────────┬──────────────────────────────┬───────────────┘
-               │                              │
-               ▼                              ▼
+                │                              │
+                ▼                              ▼
 ┌──────────────────────────────┐ ┌────────────────────────────┐
 │      AI INFERENCE LAYER      │ │        MEMORY LAYER        │
-│ • Primary: Gemma 2 9B (Groq) │ │ • MongoDB Atlas Free / Pro │
-│   500 tokens/sec, $0 cost    │ │   Products, Conversations, │
+│ • Primary: Gemma 2 9B (Groq) │ │ • MongoDB Atlas Vector     │
+│   Ultra-fast token streaming │ │   Products, Conversations, │
 │ • Backup: Ollama Gemma 2 2B  │ │   Customers, Orders        │
-│ • Telemetry: Sentry Tracing  │ │ • Local JSON Fallback Store│
+│ • Telemetry: Sentry Tracing  │ │ • Local Resilient JSON DB  │
 └──────────────────────────────┘ └────────────────────────────┘
 ```
 
 ---
 
-## 🛠️ The $0 Technology Stack
+## 🛠️ Technology Stack
 
-| Layer | Technology | Regular Price | Your Price | Why It's Better for Students |
-|---|---|---|---|---|
-| **AI Inference** | Gemma 2 9B via Groq | $80–200/mo | **$0** | ~500 tokens/sec; 14,400 free req/day; no credit card required |
-| **Local AI Backup** | Gemma 2 2B via Ollama | $0 | **$0** | 100% offline fallback; runs on 8GB RAM CPU |
-| **WhatsApp Layer** | Baileys (`@whiskeysockets/baileys`) | $20+/mo (Twilio) | **$0** | Direct socket pairing via QR scan; no phone verification fees |
-| **Database & Vector Search** | MongoDB Atlas | $50/mo | **$0** | 768-dim vector search + conversation memory |
-| **Voice Synthesis** | Edge TTS (Microsoft Neural) | $15/mo (ElevenLabs) | **$0** | Free high-fidelity neural voices across 40+ languages |
-| **Payments** | UPI QR + `qrcode` npm | $29/mo (Stripe) | **$0** | Zero transaction fees; generates instant scan-and-pay QR |
-| **Scheduling** | `node-cron` | $25/mo (Temporal) | **$0** | Automated hourly follow-ups with zero external infrastructure |
-| **Tracing** | Sentry Free Tier | $26/mo | **$0** | 5,000 errors & trace transactions/month free |
-| **Hosting** | Render Free Tier / Credits | $19/mo | **$0** | Web service + dashboard |
-| **TOTAL** | | **$400+/mo** | **$0.00** | **100% Free** |
+| Layer | Technology | Capability |
+|---|---|---|
+| **AI Inference** | Gemma 2 9B via Groq | High-throughput open model inference (~500 tokens/sec) |
+| **Local AI Backup** | Gemma 2 2B via Ollama | Offline fallback for local and on-premise deployments |
+| **WhatsApp Layer** | Baileys (`@whiskeysockets/baileys`) | Direct WhatsApp socket connection with device pairing |
+| **Database & Vector Search** | MongoDB Atlas / Local Resilient DB | 768-dim vector embeddings + multi-turn customer memory |
+| **Voice Synthesis** | Edge TTS (Neural Voices) | High-fidelity neural voice synthesis across 40+ languages |
+| **Payments** | EasyPaisa, JazzCash, Raast, COD, UPI QR | Multi-region localized checkout & payment links |
+| **Scheduling** | `node-cron` | Autonomous post-purchase follow-up engine |
+| **Tracing** | Sentry SDK | Distributed error reporting, latency tracing, and telemetry |
 
 ---
 
@@ -153,17 +153,19 @@ Open **[http://localhost:8080](http://localhost:8080)** in your browser!
 
 ### 4. Interactive WhatsApp Live Simulator (`#simulator`)
 - Photorealistic WhatsApp Web interface.
-- Test queries in **English**, **Hinglish/Hindi**, **Spanish**, **Arabic**, and **Portuguese**.
+- Test queries in **Pakistani Roman Urdu**, **English**, **Hinglish/Hindi**, **Spanish**, **Arabic**, and **Portuguese**.
 - Try quick prompts:
-  - *"Mujhe kal ke liye 2kg chocolate cake chahiye, budget 800 hai"*
+  - 🇵🇰 *"Kasy hain aap?"* (Polite local greeting)
+  - 🇵🇰 *"AoA, kal k lye chocolate cake chahye, budget 800"* (Pakistani ordering flow)
+  - 🇵🇰 *"EasyPaisa ya Cash on delivery chalega?"* (Local payment inquiry)
+  - 🏍️ *"Mujhy bike leni hai"* (Out-of-scope inquiry handling)
   - *"I need a gift for my mom, budget 500"*
   - *"Eggless options?"*
-  - *"I want to buy this, send UPI QR"*
 - Live typing indicator (`SellBot is typing...`).
-- Generates scan-ready UPI QR codes right in the chat!
+- Generates scan-ready payment QR codes and EasyPaisa/JazzCash/UPI instructions right in the chat!
 
 ### 5. Baileys Phone QR Pairing (`#pairing`)
-- To pair a real phone without paying for Twilio, visit the **QR Pairing** tab.
+- To pair any smartphone WhatsApp account, visit the **QR Pairing** tab.
 - Click **"Generate / Refresh QR Code"** and scan the QR with your phone's WhatsApp (*Linked Devices*).
 - The credentials are encrypted and stored in `./auth/baileys-session` for automatic reconnection.
 

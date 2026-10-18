@@ -60,6 +60,36 @@ async function runAgentTests() {
   assert(res4.intent === 'complain', 'Identifies complaint intent');
   assert(res4.actions.includes('escalate_to_human'), 'Triggers human escalation action');
 
+  // Turn 5: Pakistani Roman Urdu Greeting ("Kasy hain aap?")
+  console.log('\n--- Turn 5: Pakistani Urdu Greeting ("Kasy hain aap?") ---');
+  const pkUser = `whatsapp:923001234567@s.whatsapp.net`;
+  const res5 = await orchestratorAgent.processMessage({
+    channelId: pkUser,
+    text: 'Kasy hain aap?',
+  });
+  assert(res5.language === 'ur', 'Detects Pakistani Roman Urdu');
+  assert(res5.intent === 'greeting', 'Identifies greeting / well-being check');
+  assert(res5.text.toLowerCase().includes('alhamdulillah'), 'Replies warmly with Alhamdulillah');
+
+  // Turn 6: Out-of-scope Query ("Mujhy bike leni hai")
+  console.log('\n--- Turn 6: Out-of-scope Query ("Mujhy bike leni hai") ---');
+  const res6 = await orchestratorAgent.processMessage({
+    channelId: pkUser,
+    text: 'Mujhy bike leni hai',
+  });
+  assert(res6.intent === 'out_of_scope', 'Identifies out-of-scope item (bike)');
+  assert(res6.actions.includes('clarify_inventory_scope'), 'Triggers inventory scope clarification');
+  assert(res6.text.toLowerCase().includes('bike'), 'Politely addresses the requested bike');
+
+  // Turn 7: Pakistani Order with EasyPaisa/JazzCash
+  console.log('\n--- Turn 7: Pakistani Order & EasyPaisa Checkout ---');
+  const res7 = await orchestratorAgent.processMessage({
+    channelId: pkUser,
+    text: 'AoA, kal k lye chocolate cake chahye, budget 800 hai',
+  });
+  assert(res7.language === 'ur', 'Detects Roman Urdu');
+  assert(res7.metrics.toolsCalled.includes('catalog_search'), 'Calls catalog search for cake');
+
   console.log(`\n========================================`);
   console.log(`Agent Tests Finished: ${passed} Passed, ${failed} Failed`);
   console.log(`========================================\n`);

@@ -20,7 +20,7 @@
     "conversational-commerce",
     "hacktoberfest"
   ],
-  "author": "Solo Student",
+  "author": "SellBot Team",
   "license": "MIT",
   "dependencies": {
     "@google/generative-ai": "^0.24.1",

@@ -22,7 +22,8 @@ async function runToolsTests() {
   // Test 1: Language Detection
   console.log('--- 1. Language Detector ---');
   assert(LanguageDetectorTool.detect('I need a birthday cake').language === 'en', 'Detects English');
-  assert(LanguageDetectorTool.detect('Mujhe kal ke liye chocolate cake chahiye').language === 'hi-en', 'Detects Hinglish');
+  assert(LanguageDetectorTool.detect('AoA, kal k lye chocolate cake chahye').language === 'ur', 'Detects Pakistani Roman Urdu');
+  assert(LanguageDetectorTool.detect('Kasy hain aap?').language === 'ur', 'Detects Roman Urdu greeting');
   assert(LanguageDetectorTool.detect('नमस्ते मुझे केक चाहिए').language === 'hi', 'Detects Devanagari Hindi');
   assert(LanguageDetectorTool.detect('Hola necesito un pastel').language === 'es', 'Detects Spanish');
   assert(LanguageDetectorTool.detect('أريد كعكة عيد ميلاد').language === 'ar', 'Detects Arabic');
@@ -32,6 +33,12 @@ async function runToolsTests() {
   console.log('\n--- 2. Intent Classifier ---');
   const greeting = IntentClassifierTool.classify('Hi, good morning!');
   assert(greeting.intent === 'greeting', 'Classifies greeting');
+
+  const howAreYou = IntentClassifierTool.classify('Kasy hain aap?');
+  assert(howAreYou.intent === 'greeting', 'Classifies "Kasy hain" as greeting');
+
+  const outScope = IntentClassifierTool.classify('Mujhy bike leni hai');
+  assert(outScope.intent === 'out_of_scope', 'Classifies out-of-scope product inquiry (bike)');
 
   const browse = IntentClassifierTool.classify('I need a gift for mom under 500');
   assert(browse.intent === 'browse', 'Classifies browse');

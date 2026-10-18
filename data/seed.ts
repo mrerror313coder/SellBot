@@ -82,8 +82,114 @@ async function seed() {
 
   console.log(`✅ Loaded ${count} products with vector embeddings.`);
 
-  // Seed sample customers & conversations from PRD Section 14.2
+  // Seed sample customers & conversations including Pakistan users
   const sampleConversations = [
+    {
+      channelId: 'whatsapp:923001234567@s.whatsapp.net',
+      customerName: 'Hamza Khan (Lahore)',
+      status: 'sold',
+      messages: [
+        {
+          role: 'customer',
+          content: 'AoA, kal k lye chocolate cake mil jaye ga? budget 800 hai',
+          language: 'ur',
+          timestamp: new Date(Date.now() - 3600000 * 3),
+        },
+        {
+          role: 'agent',
+          content: 'Walaikum Assalam Hamza bhai! 🎂 Bilkul mil jaye ga! Hamara *Choco Truffle Fudge Cake* (Rs. 750, 4.8 ⭐) best option hai. Freshly baked kal subah 10 baje tak deliver ho jaye ga. Budget mein Rs. 50 bachein gay! Kya birthday candles (+Rs. 30) add kar dein? 🍰',
+          language: 'ur',
+          toolsUsed: ['language_detector', 'intent_classifier', 'catalog_search'],
+          reasoning: 'Pakistani Roman Urdu query, kal delivery, budget Rs. 800. Recommended Choco Truffle (Rs. 750)',
+          tokensUsed: 155,
+          latencyMs: 1950,
+          timestamp: new Date(Date.now() - 3600000 * 3 + 2000),
+        },
+        {
+          role: 'customer',
+          content: 'Haan candles bhi add kr do, aur EasyPaisa send kro',
+          language: 'ur',
+          timestamp: new Date(Date.now() - 3600000 * 3 + 45000),
+        },
+        {
+          role: 'agent',
+          content: '🎉 Order Confirmed! Total Payable: Rs. 780. Aap EasyPaisa / JazzCash (0301-1234567) par pay kar saktay hain ya Cash on Delivery (COD) bhi available hai! Thank you! 🍰',
+          language: 'ur',
+          toolsUsed: ['price_calculator', 'payment_qr', 'order_creator'],
+          reasoning: 'Customer selected EasyPaisa / COD. Generated order #ORD-921402.',
+          tokensUsed: 170,
+          latencyMs: 1600,
+          timestamp: new Date(Date.now() - 3600000 * 3 + 47000),
+        },
+      ],
+      context: {
+        detectedIntent: 'buy',
+        extractedEntities: { occasion: 'tomorrow', budget: 800, currency: 'PKR' },
+        cartItems: [
+          { name: 'Chocolate Truffle Cake', quantity: 1, price: 750, sku: 'CAKE-CHO-001' },
+          { name: 'Birthday Candle Set', quantity: 1, price: 30, sku: 'CND-BIR-001' },
+        ],
+        totalValue: 780,
+      },
+    },
+    {
+      channelId: 'whatsapp:923219876543@s.whatsapp.net',
+      customerName: 'Fatima Malik (Karachi)',
+      status: 'active',
+      messages: [
+        {
+          role: 'customer',
+          content: 'Kasy hain aap? Mujhe ammi ke liye gift basket chahiye, budget 1000 tak hai',
+          language: 'ur',
+          timestamp: new Date(Date.now() - 1800000),
+        },
+        {
+          role: 'agent',
+          content: 'Alhamdulillah main theek hoon! ❤️ Ammi ke liye hamara *Lavender Candle & Treats Box* (Rs. 790) ya *Mother\'s Day Special Rose Cake* (Rs. 890) best choice hai! Hand-poured candle aur luxury gift packing shamil hai. Konsa pasand karein gi?',
+          language: 'ur',
+          toolsUsed: ['language_detector', 'intent_classifier', 'catalog_search'],
+          reasoning: 'Pakistani user inquiry for mom gift. Budget Rs. 1000.',
+          tokensUsed: 175,
+          latencyMs: 2100,
+          timestamp: new Date(Date.now() - 1797000),
+        },
+      ],
+      context: {
+        detectedIntent: 'browse',
+        extractedEntities: { recipient: 'mom', budget: 1000, currency: 'PKR' },
+        cartItems: [{ name: 'Lavender Candle & Treats Box', quantity: 1, price: 790, sku: 'GIF-LAV-001' }],
+        totalValue: 790,
+      },
+    },
+    {
+      channelId: 'whatsapp:923335551234@s.whatsapp.net',
+      customerName: 'Bilal Ahmed (Islamabad)',
+      status: 'active',
+      messages: [
+        {
+          role: 'customer',
+          content: 'Mujhy bike leni hai',
+          language: 'ur',
+          timestamp: new Date(Date.now() - 900000),
+        },
+        {
+          role: 'agent',
+          content: 'Maazrat chahtay hain Bilal bhai! 🙏 Hum bikes mein deal nahi kartay, yeh bakery aur gift shop hai jahan fresh cakes, brownies aur celebration treats miltay hain. Agar celebration ke liye koi sweet treat ya birthday cake chahiye ho toh zaroor batayein! 🎂✨',
+          language: 'ur',
+          toolsUsed: ['language_detector', 'intent_classifier'],
+          reasoning: 'Out of scope item (bike) detected. Clarified store specialization politely.',
+          tokensUsed: 120,
+          latencyMs: 1400,
+          timestamp: new Date(Date.now() - 897000),
+        },
+      ],
+      context: {
+        detectedIntent: 'out_of_scope',
+        extractedEntities: { outOfScopeItem: 'bike' },
+        cartItems: [],
+        totalValue: 0,
+      },
+    },
     {
       channelId: 'whatsapp:919876543210@s.whatsapp.net',
       customerName: 'Rahul Sharma',

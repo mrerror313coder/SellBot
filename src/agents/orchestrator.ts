@@ -14,6 +14,7 @@ import { Customer } from '../models/customer';
 import { BASE_SYSTEM_PROMPT, getLanguageSystemPrompt } from './system-prompt';
 import { englishPrompts } from './prompts/en';
 import { hindiPrompts } from './prompts/hi';
+import { urduPrompts } from './prompts/ur';
 import { spanishPrompts } from './prompts/es';
 import { arabicPrompts } from './prompts/ar';
 import { portuguesePrompts } from './prompts/pt';
@@ -95,8 +96,12 @@ export class SellBotOrchestrator {
     // 4. Decision Logic & Tool Execution State Machine
     if (intent === 'greeting') {
       actions.push('send_greeting', 'suggest_categories');
-      if (lang === 'hi' || lang === 'hi-en') {
-        replyText = hindiPrompts.greeting(storeName);
+      const isHowAreYou = /\b(kasy|kesy|kese|kaise)\s+(ho|hain|hn)\b|\b(kia|kya)\s+(hal|haal)\b|\bhow are you\b/i.test(text);
+
+      if (lang === 'ur') {
+        replyText = isHowAreYou ? urduPrompts.howAreYou() : urduPrompts.greeting(storeName);
+      } else if (lang === 'hi' || lang === 'hi-en') {
+        replyText = isHowAreYou ? `Namaste! Main ekdum badhiya hoon! Aap sunayein kaisa chal raha hai? 🎂` : hindiPrompts.greeting(storeName);
       } else if (lang === 'es') {
         replyText = spanishPrompts.greeting(storeName);
       } else if (lang === 'ar') {
@@ -104,12 +109,24 @@ export class SellBotOrchestrator {
       } else if (lang === 'pt') {
         replyText = portuguesePrompts.greeting(storeName);
       } else {
-        replyText = englishPrompts.greeting(storeName);
+        replyText = isHowAreYou ? `I'm doing wonderful, thank you for asking! How can I help make your celebration sweeter? 🍰` : englishPrompts.greeting(storeName);
+      }
+    } else if (intent === 'out_of_scope') {
+      actions.push('clarify_inventory_scope');
+      const item = context.extractedEntities?.outOfScopeItem || 'is product';
+      if (lang === 'ur') {
+        replyText = urduPrompts.outOfScope(item, storeName);
+      } else if (lang === 'hi' || lang === 'hi-en') {
+        replyText = `Maaf kijiyega! 🙏 Hum ${item} mein deal nahi karte. Hamari store par fresh cakes, brownies aur gift hampers available hain! 🎂`;
+      } else {
+        replyText = `Sorry! 🙏 We don't sell ${item}. ${storeName} specializes in freshly baked celebration cakes, brownies, and gift hampers. Let us know if you'd like our sweets menu! 🎂✨`;
       }
     } else if (intent === 'complain' || intent === 'return') {
       actions.push('handle_complaint', 'escalate_to_human');
       conversation.status = 'escalated';
-      if (lang === 'hi' || lang === 'hi-en') {
+      if (lang === 'ur') {
+        replyText = `Humein behad afsos hai ke aapko pareshani hui! 🙏 Hum quality par koi samjhota nahi kartay.\n\nMain foran yeh issue store manager ko forward kar raha hoon, aur aapko replacement ya full refund milega.\n\nKripya damaged product ki tasveer bhej dain. Hum 5 minute mein aapse yahan rabta karein gay.`;
+      } else if (lang === 'hi' || lang === 'hi-en') {
         replyText = `Humein behad afsos hai ki aapko problem aayi! 🙏 Hum quality ko leke bilkul compromise nahi karte.\n\nMai turant yeh issue Priya (Store Owner) ko forward kar raha hoon, aur aapko replacement ya 100% refund provide kiya jayega.\n\nKripya damaged product ka photo bhej dein. Ek human executive 5 minute mein aapse yahan connect karega.`;
       } else {
         replyText = `We are truly sorry for the trouble! 🙏 We take our quality very seriously.\n\nI have immediately escalated this to our store owner, and we will issue a full replacement or instant refund.\n\nPlease share a quick photo of the item, and a team member will assist you here within minutes.`;

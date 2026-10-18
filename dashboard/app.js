@@ -152,6 +152,9 @@ function renderRecentConversationsTable(convs) {
 }
 
 function getSenderDisplayName(channelId) {
+  if (channelId.includes('923001234567')) return 'Hamza Khan (Lahore)';
+  if (channelId.includes('923219876543')) return 'Fatima Malik (Karachi)';
+  if (channelId.includes('923335551234')) return 'Bilal Ahmed (Islamabad)';
   if (channelId.includes('919876543210')) return 'Rahul Sharma';
   if (channelId.includes('919811223344')) return 'Priya Patel';
   if (channelId.includes('919955443322')) return 'Amit Verma';

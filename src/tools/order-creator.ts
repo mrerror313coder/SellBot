@@ -109,16 +109,32 @@ export class OrderCreatorTool {
       // non-fatal
     }
 
-    const itemsSummary = items.map((i) => `• ${i.quantity}x ${i.name} (₹${i.price})`).join('\n');
+    const isPk = currency === 'PKR' || (customerPhone && (customerPhone.includes('923') || customerPhone.includes('+92')));
+    const currSymbol = isPk ? 'Rs. ' : '₹';
+    const itemsSummary = items.map((i) => `• ${i.quantity}x ${i.name} (${currSymbol}${i.price})`).join('\n');
+
+    let paymentInstructions = '';
+    if (isPk) {
+      paymentInstructions =
+        `📲 *Payment Options (Pakistan):*\n` +
+        `• *EasyPaisa / JazzCash:* ${payment.easyPaisa}\n` +
+        `• *Raast ID:* ${payment.raastId}\n` +
+        `• *Cash on Delivery (COD):* Reply with your complete delivery address to confirm COD!\n\n` +
+        `Scan the QR code or send screenshot after transfer.`;
+    } else {
+      paymentInstructions =
+        `📲 *To Pay via UPI:* Scan the QR code or tap the link below:\n${payment.upiLink}\n\n` +
+        `Once paid, kindly reply with a screenshot or transaction ID.`;
+    }
+
     const confirmationMessage =
       `🎉 *Order Confirmed!* #${orderId}\n\n` +
       `Items:\n${itemsSummary}\n\n` +
-      `Subtotal: ₹${subtotal}\n` +
-      (discount > 0 ? `Discount: -₹${discount}\n` : '') +
-      `Delivery: ${shipping === 0 ? 'FREE' : `₹${shipping}`}\n` +
-      `*Total Payable: ₹${total}*\n\n` +
-      `📲 *To Pay via UPI:* Scan the QR code or tap the link below:\n${payment.upiLink}\n\n` +
-      `Once paid, kindly reply with a screenshot or transaction ID. Thank you for choosing us! 🍰`;
+      `Subtotal: ${currSymbol}${subtotal}\n` +
+      (discount > 0 ? `Discount: -${currSymbol}${discount}\n` : '') +
+      `Delivery: ${shipping === 0 ? 'FREE' : `${currSymbol}${shipping}`}\n` +
+      `*Total Payable: ${currSymbol}${total}*\n\n` +
+      `${paymentInstructions}\n\nThank you for choosing us! 🍰✨`;
 
     return {
       order: orderData,
