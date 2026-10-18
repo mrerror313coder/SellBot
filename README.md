@@ -5,8 +5,13 @@
 
 [![Tests](https://img.shields.io/badge/tests-49%20passed-10b981.svg)]()
 [![Model](https://img.shields.io/badge/AI%20Model-Gemma%202%209B-purple.svg)]()
-[![Stack](https://img.shields.io/badge/whatsapp-Baileys%20Socket-00a884.svg)]()
+[![Live Demo](https://img.shields.io/badge/demo-live%20on%20render-00b894.svg)](https://sellbot-cdpz.onrender.com)
 [![Payments](https://img.shields.io/badge/payments-EasyPaisa%20%7C%20JazzCash%20%7C%20UPI-blue.svg)]()
+
+---
+
+🚀 **Live Interactive Demo**: [https://sellbot-cdpz.onrender.com](https://sellbot-cdpz.onrender.com)  
+📦 **GitHub Repository**: [https://github.com/mrerror313coder/SellBot](https://github.com/mrerror313coder/SellBot)
 
 ---
 

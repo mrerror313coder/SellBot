@@ -10,6 +10,9 @@ canonical_url: https://dev.to
 
 *Submitted to Hacktoberfest 2026 — Week 2: Side Hustle / Agentic Commerce*
 
+🚀 **Live Interactive Demo**: [https://sellbot-cdpz.onrender.com](https://sellbot-cdpz.onrender.com)  
+📦 **GitHub Repository**: [https://github.com/mrerror313coder/SellBot](https://github.com/mrerror313coder/SellBot)
+
 ---
 
 ## 1. The Hook: A Broken Bakery and 30 Lost Orders a Week
