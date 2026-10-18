@@ -188,7 +188,7 @@ SellBot integrates **Sentry Tracing** to track every agent execution:
 
 1. **Clone the Repo**:
    ```bash
-   git clone https://github.com/your-username/sellbot.git
+   git clone https://github.com/mrerror313coder/SellBot.git
    cd sellbot
    npm install
    ```

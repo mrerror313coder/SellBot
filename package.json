@@ -2,6 +2,10 @@
   "name": "sellbot",
   "version": "1.0.0",
   "description": "Autonomous AI WhatsApp Sales Agent for e-commerce stores",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mrerror313coder/SellBot.git"
+  },
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",

@@ -40704,7 +40704,7 @@
       "_id": "conv_1792158488384_v5fp",
       "channelId": "whatsapp:919999000001@s.whatsapp.net",
       "storeId": "store_priya_001",
-      "status": "sold",
+      "status": "active",
       "messages": [
         {
           "role": "customer",

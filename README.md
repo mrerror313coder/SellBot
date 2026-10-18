@@ -93,7 +93,7 @@ Small to medium e-commerce businesses conduct **60–80% of sales through WhatsA
 
 ### 2. Installation
 ```bash
-git clone https://github.com/your-username/sellbot.git
+git clone https://github.com/mrerror313coder/SellBot.git
 cd sellbot
 npm install
 ```
