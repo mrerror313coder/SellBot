@@ -286,6 +286,84 @@ async function loadCatalog() {
   }
 }
 
+const PRODUCT_IMAGES = {
+  'CAKE-CHO-001': 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600', // Chocolate Truffle Cake
+  'CAKE-RED-001': 'https://images.unsplash.com/photo-1586788680434-30d324b2d46f?w=600', // Red Velvet Cake
+  'CAKE-VAN-001': 'https://images.unsplash.com/photo-1535141192574-5d4897c13136?w=600', // Vanilla Sponge Cake
+  'CAKE-BLU-001': 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=600', // Blueberry Cheesecake
+  'CAKE-PHO-001': 'https://images.unsplash.com/photo-1558301211-0d8c8ddee6ec?w=600', // Custom Photo Cake
+  'CUP-ASS-001': 'https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?w=600', // Assorted Cupcakes
+  'BRW-CHO-001': 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600', // Walnut Brownie
+  'COO-CHI-001': 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=600', // Choc-Chip Cookie Jar
+  'MAC-ASS-001': 'https://images.unsplash.com/photo-1569864358642-9d1684040f43?w=600', // French Macarons
+  'CND-BIR-001': 'https://images.unsplash.com/photo-1513151233558-d860c5398176?w=600', // Birthday Candles
+  'TOP-GLD-001': 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600', // Gold Cake Topper
+  'CAKE-BEN-001': 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?w=600', // Bento Cake
+  'PAS-DUT-001': 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600', // Dutch Truffle Pastry
+  'CAKE-FRU-001': 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600', // Fruit Gateau Cake
+  'DES-MOU-001': 'https://images.unsplash.com/photo-1541783245831-57d6fb0926d3?w=600', // Chocolate Mousse
+  'DES-TIR-001': 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=600', // Tiramisu Classico
+  'CAKE-PIN-001': 'https://images.unsplash.com/photo-1562440499-64c9a111f713?w=600', // Pineapple Cake
+  'BAK-CRO-001': 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=600', // Butter Croissant
+  'TAR-ALM-001': 'https://images.unsplash.com/photo-1519915028121-7d346b720b13?w=600', // Almond Tart
+  'DOU-NUT-001': 'https://images.unsplash.com/photo-1527515862127-a4fc05baf7a5?w=600', // Nutella Doughnut
+  'HAM-MIN-001': 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=600', // Mini Hamper
+  'CAKE-ROS-001': 'https://images.unsplash.com/photo-1535141192574-5d4897c13136?w=600', // Rose Cake
+  'GIF-LAV-001': 'https://images.unsplash.com/photo-1603006905003-be475563bc59?w=600', // Lavender Candle Box
+  'CAKE-BLK-001': 'https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?w=600', // Black Forest Cake
+  'DES-CHI-001': 'https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?w=600', // Mango Chia Pudding
+  'CAKE-CAR-001': 'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=600', // Salted Caramel Popcorn Cake
+  'CAKE-MAT-001': 'https://images.unsplash.com/photo-1582293041079-7814c2f12063?w=600', // Matcha Roll Cake
+  'BAK-SOU-001': 'https://images.unsplash.com/photo-1589367920969-ab8e050bbb04?w=600', // Artisan Sourdough
+  'BAK-GAR-001': 'https://images.unsplash.com/photo-1619566636858-adf3ef46400b?w=600', // Garlic Herb Bread
+  'CAKE-RAS-001': 'https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7?w=600', // Rasmalai Fusion Cake
+  'CAKE-JAM-001': 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=600', // Gulab Jamun Cheesecake
+  'BAK-PIST-001': 'https://images.unsplash.com/photo-1519676867240-f03562e64548?w=600', // Pistachio Baklava
+  'CAKE-KETO-001': 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600', // Keto Dark Chocolate Cake
+  'CAKE-GF-001': 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600', // Almond Orange Cake
+  'CAKE-STR-001': 'https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=600', // Strawberry Shortcake
+  'CAKE-BIS-001': 'https://images.unsplash.com/photo-1524351199678-941a58a3df50?w=600', // Biscoff Cheesecake
+  'TAR-PEC-001': 'https://images.unsplash.com/photo-1519915028121-7d346b720b13?w=600', // Pecan Tart
+  'BAK-BAB-001': 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600', // Nutella Babka
+  'ACC-BAL-001': 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600', // Party Balloons
+  'ACC-CRD-001': 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=600', // Birthday Card
+  'ACC-WRP-001': 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=600', // Ribbon & Wrap
+  'FLW-ROS-001': 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600', // Red Roses
+  'FLW-LIL-001': 'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=600', // White Lilies
+  'COO-DOU-001': 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=600', // Double Choc Cookie
+  'COO-OAT-001': 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=600', // Oatmeal Cookies
+  'CHO-BARK-001': 'https://images.unsplash.com/photo-1541783245831-57d6fb0926d3?w=600', // Dark Chocolate Bark
+  'CHO-ROC-001': 'https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=600', // Almond Chocolate Rocks
+  'BEV-COL-001': 'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=600', // Cold Brew Coffee
+  'BEV-LAT-001': 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600', // Vanilla Iced Latte
+  'HAM-ULT-001': 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=600', // Ultimate Celebration Box
+};
+
+function getProductImage(p) {
+  if (p.sku && PRODUCT_IMAGES[p.sku]) return PRODUCT_IMAGES[p.sku];
+  if (p.images && p.images[0] && !p.images[0].includes('photo-1578985545062-69928b1d9587')) {
+    return p.images[0];
+  }
+  const text = ((p.name || '') + ' ' + (Array.isArray(p.category) ? p.category.join(' ') : '')).toLowerCase();
+  if (text.includes('cupcake')) return 'https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?w=600';
+  if (text.includes('brownie')) return 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600';
+  if (text.includes('cookie')) return 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=600';
+  if (text.includes('macaron')) return 'https://images.unsplash.com/photo-1569864358642-9d1684040f43?w=600';
+  if (text.includes('cheesecake') || text.includes('cheese')) return 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=600';
+  if (text.includes('red velvet')) return 'https://images.unsplash.com/photo-1586788680434-30d324b2d46f?w=600';
+  if (text.includes('bento')) return 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?w=600';
+  if (text.includes('croissant') || text.includes('bread') || text.includes('sourdough')) return 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=600';
+  if (text.includes('candle') || text.includes('topper') || text.includes('sparkler') || text.includes('balloon')) return 'https://images.unsplash.com/photo-1513151233558-d860c5398176?w=600';
+  if (text.includes('rose') || text.includes('flower') || text.includes('lily')) return 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600';
+  if (text.includes('coffee') || text.includes('brew') || text.includes('latte')) return 'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=600';
+  if (text.includes('hamper') || text.includes('gift')) return 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=600';
+  if (text.includes('pastry') || text.includes('tart')) return 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600';
+  if (text.includes('fruit') || text.includes('strawberry')) return 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600';
+  if (text.includes('tiramisu')) return 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=600';
+  if (text.includes('chocolate') || text.includes('truffle')) return 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600';
+  return 'https://images.unsplash.com/photo-1535141192574-5d4897c13136?w=600';
+}
+
 function renderCatalogGrid(products) {
   const grid = document.getElementById('catalog-cards-grid');
   grid.innerHTML = '';
@@ -293,12 +371,12 @@ function renderCatalogGrid(products) {
   products.forEach((p) => {
     const card = document.createElement('div');
     card.className = 'product-card';
-    const imgUrl = p.images?.[0] || 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400';
+    const imgUrl = getProductImage(p);
     const inStock = p.inventory?.inStock ?? true;
 
     card.innerHTML = `
       <div class="prod-img-wrap">
-        <img src="${imgUrl}" alt="${p.name}" loading="lazy">
+        <img src="${imgUrl}" alt="${p.name}" loading="lazy" style="object-fit: cover; width: 100%; height: 180px;">
         <span class="prod-stock-pill ${inStock ? 'in-stock' : 'low-stock'}">
           ${inStock ? `In Stock (${p.inventory?.quantity || 15})` : 'Low Stock'}
         </span>
@@ -308,7 +386,7 @@ function renderCatalogGrid(products) {
         <h3 class="prod-name">${p.name}</h3>
         <p class="prod-desc">${p.description}</p>
         <div class="prod-footer">
-          <span class="prod-price">₹${p.price}</span>
+          <span class="prod-price">Rs. ${p.price || 0}</span>
           <span class="prod-rating">★ ${p.rating || 4.8}</span>
         </div>
       </div>
@@ -477,12 +555,13 @@ function clearSimulator() {
     <div class="wa-msg-row agent">
       <div class="wa-msg-bubble agent">
         <div class="wa-msg-text">
-          Namaste! 🎂<br>
+          Assalam-o-Alaikum! 🎂<br>
           Welcome to Priya's Cakes! Main aapki kya madad kar sakta hoon?<br><br>
-          Aap mujhse pooch sakte hain:<br>
-          • <i>"Birthday cake dikhao"</i><br>
-          • <i>"Eggless options?"</i><br>
-          • <i>"Gift for mom under 500"</i>
+          Aap pooch saktay hain:<br>
+          • <i>"AoA, kal k lye chocolate cake chahye, budget 800"</i><br>
+          • <i>"Kasy hain aap?"</i><br>
+          • <i>"Eggless options available hain?"</i><br>
+          • <i>"EasyPaisa ya Cash on delivery chalega?"</i>
         </div>
         <div class="wa-msg-time">10:00 AM</div>
       </div>
