@@ -40400,26 +40400,180 @@
           "tokensUsed": 160,
           "latencyMs": 1800,
           "timestamp": "2026-10-18T11:27:29.039Z"
+        },
+        {
+          "role": "customer",
+          "content": "Kasy hain aap?",
+          "language": "ur",
+          "timestamp": "2026-10-18T14:04:33.189Z",
+          "mediaType": "text"
+        },
+        {
+          "role": "agent",
+          "content": "Walaikum Assalam! Main theek hoon alhamdulillah! ❤️ Aap sunayein kaisay hain? Aaj aapke liye kya fresh ready karwayein?",
+          "language": "ur",
+          "timestamp": "2026-10-18T14:04:33.189Z",
+          "toolsUsed": [
+            "language_detector",
+            "intent_classifier"
+          ],
+          "reasoning": "Intent: greeting, Entities: {\"recipient\":\"girlfriend\",\"budget\":500,\"currency\":\"INR\"}",
+          "tokensUsed": 0,
+          "latencyMs": 4
+        },
+        {
+          "role": "customer",
+          "content": "AoA, kal k lye chocolate cake chahye, budget 800",
+          "language": "ur",
+          "timestamp": "2026-10-18T14:04:45.264Z",
+          "mediaType": "text"
+        },
+        {
+          "role": "agent",
+          "content": "Kal ke liye chocolate cake — bilkul mil jaye ga! 🎂\n\nYeh raha best option:\n• *Choco Truffle Fudge Cake* (500g — Rs. 750, 4.8 ⭐)\n• Eggless option bhi available hai!\n• Delivery: Kal subah 10 baje tak!\n\nBudget mein ekdum fit hai. Kya sath mein birthday candles add kar dein? 🍰",
+          "language": "ur",
+          "timestamp": "2026-10-18T14:04:45.264Z",
+          "toolsUsed": [
+            "language_detector",
+            "intent_classifier",
+            "catalog_search",
+            "inventory_check"
+          ],
+          "reasoning": "Intent: browse, Entities: {\"recipient\":\"girlfriend\",\"budget\":800,\"currency\":\"PKR\"}",
+          "tokensUsed": 121,
+          "latencyMs": 53
+        },
+        {
+          "role": "customer",
+          "content": "EasyPaisa ya Cash on Delivery available hai?",
+          "language": "ur",
+          "timestamp": "2026-10-18T14:05:08.680Z",
+          "mediaType": "text"
+        },
+        {
+          "role": "agent",
+          "content": "🎉 *Order Confirmed!* #ORD-308573\n\nItems:\n• 1x Black Forest Classic Cake (Rs. 700)\n\nSubtotal: Rs. 700\nDelivery: Rs. 50\n*Total Payable: Rs. 750*\n\n📲 *Payment Options (Pakistan):*\n• *EasyPaisa / JazzCash:* 0301-1234567\n• *Raast ID:* 03011234567\n• *Cash on Delivery (COD):* Reply with your complete delivery address to confirm COD!\n\nScan the QR code or send screenshot after transfer.\n\nThank you for choosing us! 🍰✨",
+          "language": "ur",
+          "timestamp": "2026-10-18T14:05:08.680Z",
+          "toolsUsed": [
+            "language_detector",
+            "intent_classifier",
+            "inventory_check",
+            "price_calculator",
+            "payment_qr",
+            "order_creator"
+          ],
+          "reasoning": "Intent: buy, Entities: {\"recipient\":\"girlfriend\",\"budget\":800,\"currency\":\"PKR\"}",
+          "tokensUsed": 0,
+          "latencyMs": 108
+        },
+        {
+          "role": "customer",
+          "content": "Mujhy bike leni hai",
+          "language": "ur",
+          "timestamp": "2026-10-18T14:05:27.739Z",
+          "mediaType": "text"
+        },
+        {
+          "role": "agent",
+          "content": "Maazrat chahtay hain janab! 🙏 Hum bike mein deal nahi kartay. Priya's Cakes par fresh cakes, brownies, cookies aur gift hampers available hain. Agar aapko koi celebration cake ya sweet treat chahiye ho toh batayein! 😊",
+          "language": "ur",
+          "timestamp": "2026-10-18T14:05:27.739Z",
+          "toolsUsed": [
+            "language_detector",
+            "intent_classifier"
+          ],
+          "reasoning": "Intent: out_of_scope, Entities: {\"recipient\":\"girlfriend\",\"budget\":800,\"currency\":\"PKR\",\"outOfScopeItem\":\"bike\"}",
+          "tokensUsed": 0,
+          "latencyMs": 0
+        },
+        {
+          "role": "customer",
+          "content": "I need a gift for my mom, budget 500",
+          "language": "en",
+          "timestamp": "2026-10-18T14:05:40.764Z",
+          "mediaType": "text"
+        },
+        {
+          "role": "agent",
+          "content": "Looking for a gift for Mom? Here are our top thoughtful picks:\n\n1. *Lavender Aromatherapy Candle & Treats Box* (Rs. 790) — Hand-poured soy candle with 4 French macarons\n2. *Mother's Day Special Rose Cake* (Rs. 890) — Fragrant floral sponge\n3. *Assorted Cupcake Box (Pack of 6)* (Rs. 450)\n\nAll gifts include luxury craft ribbon wrap and a handwritten card. Which one would she love most?",
+          "language": "en",
+          "timestamp": "2026-10-18T14:05:40.764Z",
+          "toolsUsed": [
+            "language_detector",
+            "intent_classifier",
+            "catalog_search",
+            "inventory_check"
+          ],
+          "reasoning": "Intent: browse, Entities: {\"recipient\":\"mom\",\"budget\":500,\"currency\":\"INR\",\"outOfScopeItem\":\"bike\"}",
+          "tokensUsed": 146,
+          "latencyMs": 5
+        },
+        {
+          "role": "customer",
+          "content": "Hi menu kia hai",
+          "language": "ur",
+          "timestamp": "2026-10-18T14:05:53.469Z",
+          "mediaType": "text"
+        },
+        {
+          "role": "agent",
+          "content": "Assalam-o-Alaikum! 🌸 Priya's Cakes mein khushamdeed!\nMain SellBot hoon, aapka personal sales assistant. Main aapki kya madad kar sakta hoon?\n\nAap mujhse pooch saktay hain:\n• \"Kal ke liye birthday cake dikhao\"\n• \"Eggless options kya hain?\"\n• \"Menu aur price list bhejo\"",
+          "language": "ur",
+          "timestamp": "2026-10-18T14:05:53.469Z",
+          "toolsUsed": [
+            "language_detector",
+            "intent_classifier",
+            "catalog_search",
+            "inventory_check"
+          ],
+          "reasoning": "Intent: browse, Entities: {\"recipient\":\"mom\",\"budget\":500,\"currency\":\"INR\",\"outOfScopeItem\":\"bike\"}",
+          "tokensUsed": 111,
+          "latencyMs": 5
+        },
+        {
+          "role": "customer",
+          "content": "kon se cakes hain",
+          "language": "ur",
+          "timestamp": "2026-10-18T14:06:23.153Z",
+          "mediaType": "text"
+        },
+        {
+          "role": "agent",
+          "content": "Kal ke liye chocolate cake — bilkul! 🎂\n\nYeh raha best option:\n• *Choco Truffle Cake* (500g — ₹750, 4.8 ⭐)\n• Eggless option available hai!\n• Delivery: Kal subah 10 baje tak!\n\nBudget mein ekdum fit hai. Kya aapko complimentary candles ya custom name add karwana hai? 🍰",
+          "language": "ur",
+          "timestamp": "2026-10-18T14:06:23.153Z",
+          "toolsUsed": [
+            "language_detector",
+            "intent_classifier",
+            "catalog_search",
+            "inventory_check"
+          ],
+          "reasoning": "Intent: browse, Entities: {\"recipient\":\"mom\",\"budget\":500,\"currency\":\"INR\",\"outOfScopeItem\":\"bike\"}",
+          "tokensUsed": 111,
+          "latencyMs": 6
         }
       ],
       "context": {
-        "detectedIntent": "buy",
+        "detectedIntent": "browse",
         "extractedEntities": {
-          "recipient": "girlfriend",
+          "recipient": "mom",
           "budget": 500,
-          "currency": "INR"
+          "currency": "INR",
+          "outOfScopeItem": "bike"
         },
         "cartItems": [
           {
-            "name": "Assorted Cupcake Box (Pack of 6)",
+            "productId": "CAKE-VAN-001",
+            "sku": "CAKE-VAN-001",
+            "name": "Eggless Vanilla Sponge Cake",
             "quantity": 1,
-            "price": 450,
-            "sku": "CUP-ASS-001"
+            "price": 600
           }
         ],
-        "totalValue": 450
+        "totalValue": 600
       },
-      "lastMessageAt": "2026-10-18T13:26:27.039Z",
+      "lastMessageAt": "2026-10-18T14:06:23.153Z",
       "createdAt": "2026-10-18T13:26:27.039Z"
     },
     "whatsapp:919811223344@s.whatsapp.net": {
@@ -42420,13 +42574,41 @@
       "orderStatus": "confirmed",
       "createdAt": "2026-10-18T13:28:57.660Z",
       "updatedAt": "2026-10-18T13:28:57.660Z"
+    },
+    "ORD-308573": {
+      "_id": "ORD-308573",
+      "storeId": "store_priya_001",
+      "customerName": "Rahul Sharma",
+      "customerPhone": "whatsapp:919876543210@s.whatsapp.net",
+      "conversationId": "conv_1792329987039_whatsapp:919876543210@s.whatsapp.net",
+      "items": [
+        {
+          "productId": "CAKE-BLK-001",
+          "sku": "CAKE-BLK-001",
+          "name": "Black Forest Classic Cake",
+          "quantity": 1,
+          "price": 700
+        }
+      ],
+      "subtotal": 700,
+      "discount": 0,
+      "shipping": 50,
+      "total": 750,
+      "currency": "PKR",
+      "paymentStatus": "pending",
+      "paymentMethod": "upi",
+      "paymentQR": "data:image/png;base64,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",
+      "paymentLink": "upi://pay?pa=priya%40paytm&pn=Priya's%20Cakes&am=750.00&cu=PKR&tn=ORD-308573",
+      "orderStatus": "confirmed",
+      "createdAt": "2026-10-18T14:05:08.670Z",
+      "updatedAt": "2026-10-18T14:05:08.670Z"
     }
   },
   "stores": {
     "store_priya_001": {
       "_id": "store_priya_001",
       "storeId": "store_priya_001",
-      "name": "Priya's Cakes",
+      "name": "Error Cakes",
       "owner": "priya@email.com",
       "channels": {
         "whatsapp": {
@@ -42436,7 +42618,7 @@
       },
       "settings": {
         "agentPersonality": "warm, friendly, uses emojis, helpful pastry and gift consultant",
-        "paymentUPI": "priya@paytm",
+        "paymentUPI": "error@paytm",
         "currency": "PKR",
         "freeShippingThreshold": 1000,
         "upsellAggressiveness": 0.5
@@ -42447,7 +42629,7 @@
         "conversationsLimit": 500
       },
       "createdAt": "2026-10-16T13:12:08.515Z",
-      "updatedAt": "2026-10-16T21:22:35.648Z"
+      "updatedAt": "2026-10-18T14:07:03.133Z"
     }
   }
 }

@@ -29,6 +29,18 @@ const audioDir = path.join(__dirname, '..', 'data', 'audio');
 app.use(express.static(dashboardDir));
 app.use('/api/voice', express.static(audioDir));
 
+// Cloud Deployment Health Check Endpoint
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    uptime: Math.floor(process.uptime()),
+    timestamp: new Date().toISOString(),
+    service: 'SellBot',
+    version: '1.0.0',
+    database: dbService.isConnected ? 'connected' : 'local-resilient',
+  });
+});
+
 // API Routers
 app.use('/api/webhook', webhookRouter);
 app.use('/api/products', productsRouter);

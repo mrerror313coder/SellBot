@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: sellbot-agent
+    env: node
+    plan: free
+    region: oregon
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 8080
+      - key: STORE_NAME
+        value: "Priya's Cakes"
+      - key: STORE_CURRENCY
+        value: "PKR"
+      - key: GROQ_MODEL
+        value: "gemma2-9b-it"
+      - key: ENABLE_WHATSAPP_AUTOSTART
+        value: "false"

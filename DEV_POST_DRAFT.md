@@ -2,7 +2,7 @@
 title: "I Built an Autonomous 24/7 WhatsApp Sales Agent Using Open-Source AI. Here's How."
 published: false
 description: "How I built an autonomous, multilingual WhatsApp sales agent using Gemma 2 9B, Mastra, Baileys, and MongoDB Atlas Vector Search."
-tags: devchallenge, hf26challenge, gemma, mastra, mongodb, render, sentry
+tags: devchallenge, hf26challenge, gemma, mongodb
 canonical_url: https://dev.to
 ---
 
